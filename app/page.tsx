@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Fragment } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
+import { Dialog, Transition } from "@headlessui/react"
 import {
   Github,
   Linkedin,
@@ -30,6 +31,7 @@ import { Textarea } from "@/components/ui/textarea"
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isResumeOpen, setIsResumeOpen] = useState(false)
   const { scrollYProgress } = useScroll()
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
 
@@ -184,6 +186,7 @@ export default function Portfolio() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                onClick={() => setIsResumeOpen(true)}
               >
                 <Download className="mr-2 h-4 w-4" />
                 View Resume
@@ -221,6 +224,31 @@ export default function Portfolio() {
           </motion.div>
         </div>
       </section>
+
+      {/* Resume Modal */}
+      <Transition appear show={isResumeOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={() => setIsResumeOpen(false)}>
+          <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            <Dialog.Panel className="bg-gray-900 rounded-lg shadow-lg max-w-4xl w-full p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-bold text-white">My Resume</h2>
+                <button
+                  onClick={() => setIsResumeOpen(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              <iframe
+                src="/harshit-resume.pdf"
+                className="w-full h-[500px] border-none"
+                title="Harshit Tiwari Resume"
+              />
+            </Dialog.Panel>
+          </div>
+        </Dialog>
+      </Transition>
 
       {/* About Section */}
       <section id="about" className="py-20 relative">
