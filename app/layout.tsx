@@ -3,8 +3,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Harshit Tiwari',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  description: 'Harshit',
+  generator: 'Harshit',
 }
 
 export default function RootLayout({
